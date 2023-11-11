@@ -76,7 +76,14 @@ class EmployeController extends Controller
      */
     public function update(Request $request, Employe $employe)
     {
-        //
+        $employe->update([
+            'name' => $request->Name,  
+        'email' => $request->Email,
+        'phone' => $request->Phone,
+        'role' => $request->Role,
+        ]);
+        session()->flash('success', 'Employe updated successfully.');
+        return redirect('/employe');
     }
 
     /**

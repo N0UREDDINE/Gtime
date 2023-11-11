@@ -32,10 +32,7 @@
                             <input type="text" id="Role" name="Role" value="{{ $employe->role }}" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 light:bg-gray-700 light:border-gray-600 light:placeholder-gray-400 light:text-white light:focus:ring-blue-500 light:focus:border-blue-500" placeholder="Role ..." required>
                         </div>
 
-                        <div class="mb-6">
-                            <label for="Address" class="block mb-2 text-sm font-medium text-gray-900">Password</label>
-                            <input type="text" id="Address" name="Address" value="{{ $employe->Address }}" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 light:bg-gray-700 light:border-gray-600 light:placeholder-gray-400 light:text-white light:focus:ring-blue-500 light:focus:border-blue-500" placeholder="Password ..." >
-                        </div>
+                        
                         <button type="submit" style="background-color: darkorchid; padding: 10px 20px; border-radius: 8px;" class="text-white hover:bg-violet-600 active:bg-violet-700 focus:outline-none focus:ring focus:ring-violet-300 ...">
                             Edit
                           </button>

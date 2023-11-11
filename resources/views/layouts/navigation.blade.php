@@ -18,6 +18,10 @@
                     <x-nav-link :href="route('employe')" :active="request()->routeIs('employe')">
                         {{ __('employes') }}
                     </x-nav-link>
+                    <x-nav-link :href="route('employe')" :active="request()->routeIs('employe')">
+                        {{ __('Consulter') }}
+                    </x-nav-link>
+                    
                 </div>
             </div>
 
