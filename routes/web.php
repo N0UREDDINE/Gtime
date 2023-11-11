@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\EmployeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,18 +15,22 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', function () {return view('welcome');});
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/dashboard', function () {return view('dashboard');})->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+Route::get('/employe', [employeController::class, 'index'])->name('employe');
 
+Route::get('/employe/ajouter', [employeController::class, 'create']);
+Route::post('/employe/ajouter', [employeController::class, 'store']);
+
+Route::get('/employe/{employe}/edit', [employeController::class, 'edit']);
+Route::put('/employe/{employe}/edit', [employeController::class, 'update']);
+
+Route::delete('/employe/{employe}', [employeController::class, 'destroy'])->name('destroyEmploye');
 require __DIR__.'/auth.php';
