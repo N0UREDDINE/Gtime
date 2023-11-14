@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\EmployeController;
+use App\Http\Controllers\RoleController;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,13 +25,32 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+
+//EMPLOYE
 Route::get('/employe', [employeController::class, 'index'])->name('employe');
 
-Route::get('/employe/ajouter', [employeController::class, 'create']);
+Route::get('/employe/ajouter', [employeController::class, 'create'])->name('createEmploye');
 Route::post('/employe/ajouter', [employeController::class, 'store']);
 
 Route::get('/employe/{employe}/edit', [employeController::class, 'edit']);
 Route::put('/employe/{employe}/edit', [employeController::class, 'update']);
 
 Route::delete('/employe/{employe}', [employeController::class, 'destroy'])->name('destroyEmploye');
+
+//ROLE
+
+Route::get('/role', [RoleController::class, 'index'])->name('role');
+
+Route::get('/role/ajouter', [RoleController::class, 'create'])->name('createRole');
+Route::post('/role/ajouter', [RoleController::class, 'store']);
+
+Route::get('/role/{role}/edit', [RoleController::class, 'edit']);
+Route::put('/role/{role}/edit', [RoleController::class, 'update']);
+
+Route::delete('/role/{role}', [RoleController::class, 'destroy'])->name('destroyRole');
+
+
+
+
+//
 require __DIR__.'/auth.php';

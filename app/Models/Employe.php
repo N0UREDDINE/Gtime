@@ -9,6 +9,8 @@ class Employe extends Model
 {
     use HasFactory;
 
+    protected $table = 'employes';
+
     protected $fillable = [
         "name",
         "email",
@@ -19,6 +21,6 @@ class Employe extends Model
 
     public function role()
     {
-        return $this->belongsTo(Role::class, 'role_id');
+        return $this->belongsTo(Role::class, 'role_id', 'id')->onDelete('cascade');
     }
 }

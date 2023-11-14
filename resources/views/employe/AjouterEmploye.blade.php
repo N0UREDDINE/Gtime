@@ -10,7 +10,8 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
                     <h1 class="text-4xl font-bold mb-10 text-center">Ajouter Un Nouveau employe</h1>
-                    <form method="POST" action="{{ url('/employe/Ajouter') }}">
+                    <form method="POST" action="{{ route('createEmploye') }}">
+
                         @csrf
                         <div class="mb-6">
                             <label for="FN" class="block mb-2 text-sm font-medium text-gray-900">Name</label>
@@ -28,8 +29,14 @@
                         </div>
 
                         <div class="mb-6">
-                            <label for="Address" class="block mb-2 text-sm font-medium text-gray-900">Role</label>
-                            <input type="text" id="Role" name="Role" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 light:bg-gray-700 light:border-gray-600 light:placeholder-gray-400 light:text-white light:focus:ring-blue-500 light:focus:border-blue-500" placeholder="Role ..." required>
+                            <label for="marque" class="block mb-2 text-sm font-medium text-gray-900">Role</label>
+                            <select name="Role" class="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 light:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 light:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Role ..." required>
+                                @forelse ($roles as $role)
+                                    <option value="{{ $role->id }}">{{ $role->role }}</option>
+                                @empty
+                                    <option value="null" selected>There is no role yet !</option>
+                                @endforelse
+                            </select>
                         </div>
 
                         <div class="mb-6">

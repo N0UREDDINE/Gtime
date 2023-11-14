@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Employes') }}
+            {{ __('Roles') }}
         </h2>
     </x-slot>
 
@@ -16,13 +16,13 @@
             @endif
 
             <center>
-                <h1 style="font-size: 2rem; font-weight: bold; color: black;">Liste Des Employes</h1>
+                <h1 style="font-size: 2rem; font-weight: bold; color: black;">Liste Des Roles</h1>
 
             </center>
-            <a href="{{ route('createEmploye') }}" class="inline-block bg-green-700 hover:bg-green-800 focus:outline-none focus:ring-4 focus:ring-green-300 font-medium text-black rounded-lg text-sm px-6 py-3 mr-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">
+            <a href="{{ route('createRole') }}" class="inline-block bg-green-700 hover:bg-green-800 focus:outline-none focus:ring-4 focus:ring-green-300 font-medium text-black rounded-lg text-sm px-6 py-3 mr-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">
                 Ajouter Employe
             </a>
-            
+
 
 
             <div class="relative overflow-x-auto shadow-md sm:rounded-lg mt-5">
@@ -31,24 +31,18 @@
                     <thead class="text-xs text-gray-900 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                         <tr>
                             <th scope="col" class="px-6 py-3">ID</th>
-                            <th scope="col" class="px-6 py-3">Name</th>
-                            <th scope="col" class="px-6 py-3">Email</th>
-                            <th scope="col" class="px-6 py-3">Phone</th>
-                            <th scope="col" class="px-6 py-3">Role</th>
+                            <th scope="col" class="px-6 py-3">role</th>
                             <th scope="col" class="px-6 py-3">Action</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @forelse ($employes as $employe)
+                        @forelse ($roles as $role)
                             <tr>
-                                <td class="px-6 py-4">{{ $employe->id }}</td>
-                                <td class="px-6 py-4">{{ $employe->name }}</td>
-                                <td class="px-6 py-4">{{ $employe->email }}</td>
-                                <td class="px-6 py-4">{{ $employe->phone }}</td>
-                                <td class="px-6 py-4">{{ $employe->role }}</td>
+                                <td class="px-6 py-4">{{ $role->id }}</td>
+                                <td class="px-6 py-4">{{ $role->role }}</td>
                                 <td class="px-6 py-4">
-                                    <form action="{{ route('destroyEmploye', $employe) }}" method="POST">
-                                        <a href="/employe/{{ $employe->id }}/edit"
+                                    <form action="{{ route('destroyRole', $role) }}" method="POST">
+                                        <a href="/role/{{ $role->id }}/edit"
                                             style="color: green; font-weight: bold">Edit</a> &nbsp; | &nbsp;
                                         @csrf
                                         @method('DELETE')
@@ -57,7 +51,7 @@
                                 </td>
                             @empty
                                 <td colspan="4" class="px-6 py-4">
-                                    <center class="text-2xl font-bold">There is no employe yet !</center>
+                                    <center class="text-2xl font-bold">There is no Role yet !</center>
                                 </td>
                             </tr>
                         @endforelse
