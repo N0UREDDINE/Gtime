@@ -4,6 +4,8 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\EmployeController;
 use App\Http\Controllers\RoleController;
+use App\Http\Controllers\ConsulterController;
+use App\Http\Controllers\ParJourController;
 
 /*
 |--------------------------------------------------------------------------
@@ -50,7 +52,11 @@ Route::put('/role/{role}/edit', [RoleController::class, 'update']);
 Route::delete('/role/{role}', [RoleController::class, 'destroy'])->name('destroyRole');
 
 
+// Consulter
+Route::get('/consulter', [ConsulterController::class, 'index'])->name('consulter');
+
+//ParJour
+Route::get('/Parjour', [ParJourController::class, 'index'])->name('ParJour');
 
 
-//
 require __DIR__.'/auth.php';

@@ -20,7 +20,7 @@
 
             </center>
             <a href="{{ route('createRole') }}" class="inline-block bg-green-700 hover:bg-green-800 focus:outline-none focus:ring-4 focus:ring-green-300 font-medium text-black rounded-lg text-sm px-6 py-3 mr-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">
-                Ajouter Employe
+                Ajouter Role
             </a>
 
 
