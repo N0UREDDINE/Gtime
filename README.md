@@ -49,9 +49,26 @@ We would like to extend our thanks to the following sponsors for funding Laravel
 - **[byte5](https://byte5.de)**
 - **[OP.GG](https://op.gg)**
 
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+## Installation
+</br>
+1.Clone this repository to your local machine</br>
+      git clone https://github.com/N0UREDDINE/Gtime.git</br>
+2.Navigate to the project directory:</br>
+      cd Gtime</br>
+3.Install the required packages:</br>
+      composer install</br>
+4.Copy the .env.example file to .env and configure your database settings</br>
+      cp .env.example .env</br>
+5.Generate an application key:</br>
+      php artisan key:generate</br>
+6.Run the migrations:</br>
+      php artisan migrate</br>
+7.Run the storage ( to create public/images folder for save the Product images ):</br>
+      php artisan storage:link</br>
+8.run vite</br>
+        npm run dev</br>
+9.Start the development server:</br>
+      php artisan serve</br>
 
 ## Code of Conduct
 
