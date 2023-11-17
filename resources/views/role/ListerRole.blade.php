@@ -27,20 +27,20 @@
 
             <div class="relative overflow-x-auto shadow-md sm:rounded-lg mt-5">
 
-                <table class="w-full text-sm text-center text-gray-500">
+                <table class="w-full text-sm text-center text-gray-500 border border-gray-300 border-collapse">
                     <thead class="text-xs text-gray-900 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                         <tr>
-                            <th scope="col" class="px-6 py-3">ID</th>
-                            <th scope="col" class="px-6 py-3">role</th>
-                            <th scope="col" class="px-6 py-3">Action</th>
+                            <th scope="col" class="px-6 py-3 border">ID</th>
+                            <th scope="col" class="px-6 py-3 border">role</th>
+                            <th scope="col" class="px-6 py-3 border">Action</th>
                         </tr>
                     </thead>
                     <tbody>
                         @forelse ($roles as $role)
                             <tr>
-                                <td class="px-6 py-4">{{ $role->id }}</td>
-                                <td class="px-6 py-4">{{ $role->role }}</td>
-                                <td class="px-6 py-4">
+                                <td class="px-6 py-4 border">{{ $role->id }}</td>
+                                <td class="px-6 py-4 border">{{ $role->role }}</td>
+                                <td class="px-6 py-4 border">
                                     <form action="{{ route('destroyRole', $role) }}" method="POST">
                                         <a href="/role/{{ $role->id }}/edit"
                                             style="color: green; font-weight: bold">Edit</a> &nbsp; | &nbsp;

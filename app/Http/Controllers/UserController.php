@@ -2,28 +2,24 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Employe;
+use App\Models\User;
 use App\Models\Role;
 use Illuminate\Http\Request;
 
-class EmployeController extends Controller
+class UserController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    // public function index()
-    // {
-    //     $employes = employe::all();
-    //     return view('employe.ListerEmployes', ['employes' => $employes]);
-    // }
     public function index()
-    {
-        $employes = Employe::join('roles', 'employes.role_id', '=', 'roles.id')
-            ->select('employes.*', 'roles.role')
-            ->get();
+{
+    $users = User::join('roles', 'users.role_id', '=', 'roles.id')
+        ->select('users.*', 'roles.role')
+        ->get();
+    // $users = User::all();
+    return view('user.ListerUsers', ['users' => $users]);
+}
 
-        return view('employe.ListerEmployes', ['employes' => $employes]);
-    }
 
     /**
      * Show the form for creating a new resource.
@@ -31,20 +27,15 @@ class EmployeController extends Controller
     public function create()
     {
         $roles = Role::all();
-        return view('employe.AjouterEmploye', ['roles' => $roles]);
+        return view('user.AjouterUser', ['roles' => $roles]);
     }
-    // public function create()
-//     {
-//         return view('employe.AjouterEmploye');
-//     }
-
 
     /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
     {
-        $newEmploye = Employe::create([
+        $newUser = User::create([
             'name' => $request->Name,
             'email' => $request->Email,
             'phone' => $request->Phone,
@@ -54,14 +45,13 @@ class EmployeController extends Controller
         
 
         session()->flash('success', 'Employe added successfully.');
-        return redirect('/employe');
+        return redirect('/user');
     }
-
 
     /**
      * Display the specified resource.
      */
-    public function show(Employe $employe)
+    public function show(User $user)
     {
         //
     }
@@ -69,23 +59,22 @@ class EmployeController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Employe $employe)
+    public function edit(User $user)
 {
     $roles = Role::all();
 
-    return view('employe.EditEmploye', [
-        'employe' => $employe,
+    return view('user.EditUser', [
+        'user' => $user,
         'roles' => $roles, // Pass the $roles variable to the view
     ]);
 }
 
-
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Employe $employe)
+    public function update(Request $request, User $user)
 {
-    $employe->update([
+    $user->update([
         'name' => $request->Name,
         'email' => $request->Email,
         'phone' => $request->Phone,
@@ -93,17 +82,16 @@ class EmployeController extends Controller
     ]);
 
     session()->flash('success', 'Employe updated successfully.');
-    return redirect('/employe');
+    return redirect('/user');
 }
-
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Employe $employe)
+    public function destroy(User $user)
     {
-        $employe->delete();
+        $user->delete();
         session()->flash('success', 'Employe deleted successfully.');
-        return redirect('/employe');
+        return redirect('/user');
     }
 }

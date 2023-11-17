@@ -2,10 +2,11 @@
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\EmployeController;
+use App\Http\Controllers\TimeController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\ConsulterController;
 use App\Http\Controllers\ParJourController;
+use App\Http\Controllers\USerController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,7 +21,7 @@ use App\Http\Controllers\ParJourController;
 
 Route::get('/', function () {return view('welcome');});
 
-Route::get('/dashboard', function () {return view('dashboard');})->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/time', function () {return view('time');})->middleware(['auth', 'verified'])->name('time');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -28,16 +29,18 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-//EMPLOYE
-Route::get('/employe', [employeController::class, 'index'])->name('employe');
 
-Route::get('/employe/ajouter', [employeController::class, 'create'])->name('createEmploye');
-Route::post('/employe/ajouter', [employeController::class, 'store']);
 
-Route::get('/employe/{employe}/edit', [employeController::class, 'edit']);
-Route::put('/employe/{employe}/edit', [employeController::class, 'update']);
+//USER
+Route::get('/user', [UserController::class, 'index'])->name('user');
 
-Route::delete('/employe/{employe}', [employeController::class, 'destroy'])->name('destroyEmploye');
+Route::get('/user/ajouter', [UserController::class, 'create'])->name('createUser');
+Route::post('/user/ajouter', [UserController::class, 'store']);
+
+Route::get('/user/{user}/edit', [UserController::class, 'edit']);
+Route::put('/user/{user}/edit', [UserController::class, 'update']);
+
+Route::delete('/user/{user}', [UserController::class, 'destroy'])->name('destroyUser');
 
 //ROLE
 
@@ -58,5 +61,26 @@ Route::get('/consulter', [ConsulterController::class, 'index'])->name('consulter
 //ParJour
 Route::get('/Parjour', [ParJourController::class, 'index'])->name('ParJour');
 
+//Time
+Route::get('/time', [TimeController::class, 'index'])->name('time');
+
+
+//MIDDLEWARE
+Route::middleware(['auth', 'role:admin'])->group(function () {
+    // Your admin routes here
+});
+
+Route::middleware(['auth', 'role:employe'])->group(function () {
+    // Your employee routes here
+});
+
+
+
+
+
+
+Route::get('/admin', function () {
+    // Uses CheckRole middleware with 'admin' as the required role
+})->middleware('role:admin');
 
 require __DIR__.'/auth.php';

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\ParJour;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class ParJourController extends Controller
@@ -13,11 +14,12 @@ class ParJourController extends Controller
      */
     public function index()
 {
-    // Assuming you are fetching users from the database
-    $users = User::all();
+    $dt = Carbon::now()->format('Y-m-d'); // Format the date to 'YYYY-MM-DD'
+    $users = User::all(); // Assuming you are retrieving users from the database
 
-    return view('ParJour.ParJour', ['users' => $users]);
+    return view('ParJour.ParJour', ['dt' => $dt, 'users' => $users]);
 }
+
 
 
     /**

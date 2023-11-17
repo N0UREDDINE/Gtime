@@ -17,12 +17,24 @@ class User extends Authenticatable
      *
      * @var array<int, string>
      */
+    protected $table = 'users';
     protected $fillable = [
         'name',
         'email',
+        'phone',
         'password',
+        'role_id',
     ];
-
+    public function role()
+    {
+        return $this->belongsTo(Role::class, 'role_id', 'id')->onDelete('cascade');
+    }
+    /**
+     * Define the relationship between User and Role.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    
     /**
      * The attributes that should be hidden for serialization.
      *

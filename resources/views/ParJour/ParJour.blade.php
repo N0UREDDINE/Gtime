@@ -1,72 +1,66 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('ParJour') }}
+            {{-- Date Bar --}}
+            <div class="date-bar" style="width: 90%; text-align: center; margin-top:1px;">
+                <span style="font-weight: bold; font-size: 18px;">Current Date: {{ $dt }}</span>
+            </div>
         </h2>
     </x-slot>
 
-    {{-- <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-8">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="search" style="width:90%; margin:auto">
-                            <form enctype="multipart/form-data" method="post" autocomplete="off">
-                                <ul for="form" id="ulform">
-                                    <li>
-                                        <label for="id_doss">Date</label>
-                                        <button class="btn btn-primary" name="rechercher" id="search">Rechercher</button>
-                                    </li>
-                                </ul>
-                            </form>
-                        </div>
-                        <br>
-                        <hr class="style-eight">
+    <div class="py-12">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
 
-                        <div class="m relative overflow-x-auto shadow-md sm:rounded-lg mt-5">
-                            <table class="w-full text-sm text-center text-gray-500">
-                                <thead class="text-xs text-gray-900 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                                    <tr>
-                                        <th scope="col" class="px-6 py-3">Nom Employé</th>
-                                        <th scope="col" class="px-6 py-3">Login</th>
-                                        <th scope="col" class="px-6 py-3">Retard</th>
-                                        <th scope="col" class="px-6 py-3">En service</th>
-                                        <th scope="col" class="px-6 py-3">En Pause</th>
-                                        <th scope="col" class="px-6 py-3">Logout</th>
-                                        <th scope="col" class="px-6 py-3">Statue</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach ($users as $us)
-                                        <?php
-                                        $nom_user = '<span style="font-size:22px">' . $us['prenom_user'] . '</span> ' . $us['nom_user'];
-                                        $user = $us['user'];
-                                        $heure_start = "08:00:00";
-                                        $time_retard = "00:15:00";
-                                        $time_work = "08:00:00";
-                                        $time_p = "01:00:00";
-                                        $heure_stop = "17:00:00";
-                                        $statue = "<img src=images/offline.png width=64/>";
-                                        ?>
-                                        <tr>
-                                            <td class="px-6 py-4" style="text-align:left">{{ $nom_user }}</td>
-                                            <td class="px-6 py-4">{{ $heure_start }}</td>
-                                            <td class="px-6 py-4" style="color:red">{{ $time_retard }}</td>
-                                            <td class="px-6 py-4" style="color:green">{{ $time_work }}</td>
-                                            <td class="px-6 py-4" style="color:blue">{{ $time_p }}</td>
-                                            <td class="px-6 py-4">{{ $heure_stop }}</td>
-                                            <td class="px-6 py-4">{!! $statue !!}</td>
-                                        </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
+            @if (session()->has('success'))
+                <div id="flash-message" style="width: 400px; position: fixed; top: 150px; right: 10px"
+                    class="bg-green-500 text-white py-2 px-4 rounded">
+                    {{ session()->get('success') }}
                 </div>
+            @endif
+
+            <div class="mt-6">
+                {{-- Search Form --}}
+                <form enctype="multipart/form-data" method="post" autocomplete="off">
+                    <div class="flex items-center">
+                        <label for="id_doss" class="text-sm font-bold text-gray-700">Date</label>
+                        <input type="text" name="dt" value="{{ $dt }}" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-200 ml-2">
+                        <button class="search rech bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded shadow ml-2" name="rechercher" id="search">Rechercher</button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="relative overflow-x-auto shadow-md sm:rounded-lg mt-5">
+                <table class="w-full text-sm text-center text-gray-500 border border-gray-300 border-collapse">
+                    <thead class="text-xs text-gray-900 uppercase bg-white dark:bg-gray-700 dark:text-gray-400">
+                        <tr>
+                            <th scope="col" class="px-6 py-3 border">Nom Employé</th>
+                            <th scope="col" class="px-6 py-3 border">LogIn_time</th>
+                            <th scope="col" class="px-6 py-3 border">Delay_time</th>
+                            <th scope="col" class="px-6 py-3 border">Full_time</th>
+                            <th scope="col" class="px-6 py-3 border">break_time</th>
+                            <th scope="col" class="px-6 py-3 border">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($users as $user)
+                            <tr>
+                                <td class="px-2 py-4 border">{{ $user->name }}</td>
+                                <td class="px-1 py-4 border">{{ $user->id }}</td>
+                                <td class="px-1 py-4 border">{{ $user->email }}</td>
+                                <td class="px-1 py-4 border">{{ $user->password }}</td>
+                                <td class="px-1 py-4 border">{{ $user->name }}</td>
+                                <td class="px-1 py-4 border">{{ $user->name }}</td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
             </div>
         </div>
-    </div> --}}
+    </div>
 
-
-    
+    <script>
+        setTimeout(function() {
+            document.getElementById('flash-message').style.display = 'none';
+        }, 4000);
+    </script>
 </x-app-layout>

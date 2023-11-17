@@ -10,7 +10,7 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
                     <h1 class="text-4xl font-bold mb-10 text-center">Ajouter Un Nouveau employe</h1>
-                    <form method="POST" action="{{ route('createEmploye') }}">
+                    <form method="POST" action="{{ route('createUser') }}">
 
                         @csrf
                         <div class="mb-6">
