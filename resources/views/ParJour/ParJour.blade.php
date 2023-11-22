@@ -20,13 +20,16 @@
 
             <div class="mt-6">
                 {{-- Search Form --}}
-                <form enctype="multipart/form-data" method="post" autocomplete="off">
+                <form enctype="multipart/form-data" method="get" action="{{ route('ParJour') }}" autocomplete="off">
+
+                    @csrf
                     <div class="flex items-center">
                         <label for="id_doss" class="text-sm font-bold text-gray-700">Date</label>
                         <input type="text" name="dt" value="{{ $dt }}" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-200 ml-2">
                         <button class="search rech bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded shadow ml-2" name="rechercher" id="search">Rechercher</button>
                     </div>
                 </form>
+                
             </div>
 
             <div class="relative overflow-x-auto shadow-md sm:rounded-lg mt-5">
@@ -42,18 +45,59 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($users as $user)
+                        @forelse ($parjours as $parjour)
                             <tr>
-                                <td class="px-2 py-4 border">{{ $user->name }}</td>
-                                <td class="px-1 py-4 border">{{ $user->id }}</td>
-                                <td class="px-1 py-4 border">{{ $user->email }}</td>
-                                <td class="px-1 py-4 border">{{ $user->password }}</td>
-                                <td class="px-1 py-4 border">{{ $user->name }}</td>
-                                <td class="px-1 py-4 border">{{ $user->name }}</td>
+                                <td class="px-2 py-4 border">
+                                    @if ($parjour->user)
+                                        {{ $parjour->user->name }}
+                                    @else
+                                        N/A or any default value
+                                    @endif
+                                </td>
+                                <td class="px-1 py-4 border">
+                                    @if ($parjour->time)
+                                        {{ $parjour->time->login_time }}
+                                    @else
+                                        N/A or any default value
+                                    @endif
+                                </td>
+                                <td class="px-1 py-4 border">
+                                    @if ($parjour->time)
+                                        {{ $parjour->time->delay_time }}
+                                    @else
+                                        N/A or any default value
+                                    @endif
+                                </td>
+                                <td class="px-1 py-4 border">
+                                    @if ($parjour->time)
+                                        {{ $parjour->time->full_time }}
+                                    @else
+                                        N/A or any default value
+                                    @endif
+                                </td>
+                                <td class="px-1 py-4 border">
+                                    @if ($parjour->time)
+                                        {{ $parjour->time->break_time }}
+                                    @else
+                                        N/A or any default value
+                                    @endif
+                                </td>
+                                <td class="px-1 py-4 border">
+                                    @if ($parjour->user)
+                                        {{ $parjour->user->status }}
+                                    @else
+                                        N/A or any default value
+                                    @endif
+                                </td>
                             </tr>
-                        @endforeach
+                        @empty
+                            <tr>
+                                <td colspan="6" class="text-center">No records found for the selected date.</td>
+                            </tr>
+                        @endforelse
                     </tbody>
                 </table>
+                
             </div>
         </div>
     </div>

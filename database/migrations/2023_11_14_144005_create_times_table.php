@@ -13,14 +13,17 @@ return new class extends Migration
     {
         Schema::create('times', function (Blueprint $table) {
             $table->id();
-            $table->string('work_time'); //8h30min
-            $table->string('LogIn_time'); //
-            $table->string('Delay_time');// LoginTime-WorkTime
-            $table->string('break_start_time')->nullable();//
-            $table->string('break_end_time')->nullable();
-            $table->string('logout_time');
-            $table->string('Service_time');//  chrono from 00:00:00 until he logs out        LogOut_tim-LogIn_time(-Delay -(breakEnd_time-BreakStart-time-(2h bin 12 w 2 ila kant)))
-            $table->timestamps(); 
+            $table->date('record_date'); // Date when the time record is created
+            $table->unsignedBigInteger('user_id'); // Add a foreign key to associate with users
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->time('work_time'); // 8h30min
+            $table->time('login_time');
+            $table->time('delay_time'); // Calculated as LoginTime - WorkTime
+            $table->time('break_start_time')->nullable();
+            $table->time('break_end_time')->nullable();
+            $table->time('logout_time');
+            $table->time('service_time'); // Chrono from 00:00:00 until he logs out
+            $table->timestamps();
         });
     }
 

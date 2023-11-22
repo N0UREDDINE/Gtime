@@ -46,6 +46,7 @@ class RegisteredUserController extends Controller
 
         Auth::login($user);
 
-        return redirect(RouteServiceProvider::HOME);
+        // Redirect to /time instead of RouteServiceProvider::HOME
+        return redirect('/time');
     }
 }

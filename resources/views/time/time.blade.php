@@ -10,7 +10,7 @@
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg mx-auto">
                 <div class="p-6 text-gray-900 dark:text-gray-100 text-center">
 
-                    <p class="mb-4">You're logged in!</p>
+                    
 
                     <!-- Bouton vert -->
                     <button class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
@@ -28,7 +28,9 @@
 
                     <x-slot name="header">
                         <h2 class="font-semibold text-2xl text-gray-800 leading-tight">
-                            Tableau de Temps avec Horloges
+                            <h2 class="font-semibold text-2xl text-gray-800 leading-tight">
+                                Welcome, {{ Auth::user()->name }}!
+                            </h2>
                         </h2>
                     </x-slot>
 
@@ -74,80 +76,82 @@
                     </div>
 
                     <!-- Ajouter du JavaScript pour mettre à jour les horloges -->
-                    <script>
                     @foreach ($times as $time)
-                        updateClock('loginClock{{ $time->id }}', '{{ $time->Login_time }}');
-                        updateServiceClock('serviceClock{{ $time->id }}');
-                        updateDelayClock('delayClock{{ $time->id }}', '{{ $time->Login_time }}');
-                        updatePauseClock('pauseClock{{ $time->id }}', '{{ $time->break_start_time }}');
-                        updateClock('logoutClock{{ $time->id }}', '{{ $time->break_start_time }}');
-                    @endforeach     
+                        <script>
+                            document.addEventListener("DOMContentLoaded", function() {
+                                updateClock('loginClock{{ $time->id }}', '{{ $time->Login_time }}');
+                                updateServiceClock('serviceClock{{ $time->id }}');
+                                updateDelayClock('delayClock{{ $time->id }}', '{{ $time->Login_time }}');
+                                updatePauseClock('logoutClock{{ $time->id }}', '{{ $time->break_start_time }}');
+                            });
 
-                        function updateServiceClock(elementId) {
-                            const clockElement = document.getElementById(elementId);
-                            let seconds = 0;
+                            function updateClock(elementId, time) {
+                                const clockElement = document.getElementById(elementId);
+                                setInterval(() => {
+                                    const now = new Date();
+                                    const hours = now.getHours().toString().padStart(2, '0');
+                                    const minutes = now.getMinutes().toString().padStart(2, '0');
+                                    const seconds = now.getSeconds().toString().padStart(2, '0');
+                                    clockElement.textContent = `${hours}:${minutes}:${seconds}`;
+                                }, 1000);
+                            }
 
-                            setInterval(() => {
-                                const hours = Math.floor(seconds / 3600).toString().padStart(2, '0');
-                                const minutes = Math.floor((seconds % 3600) / 60).toString().padStart(2, '0');
-                                const remainingSeconds = (seconds % 60).toString().padStart(2, '0');
-                                clockElement.textContent = `${hours}:${minutes}:${remainingSeconds}`;
-                                seconds++;
-                            }, 1000);
-                        }
-            function calculateDelay(loginTime) {
-            const expectedTime = '08:30:00';
-            const loginTimestamp = new Date(`2000-01-01 ${loginTime}`);
-            const expectedTimestamp = new Date(`2000-01-01 ${expectedTime}`);
-            const delayTimestamp = new Date(loginTimestamp - expectedTimestamp);
+                            function updateServiceClock(elementId) {
+                                const clockElement = document.getElementById(elementId);
+                                let seconds = 0;
 
-            const hours = delayTimestamp.getUTCHours().toString().padStart(2, '0');
-            const minutes = delayTimestamp.getUTCMinutes().toString().padStart(2, '0');
-            const seconds = delayTimestamp.getUTCSeconds().toString().padStart(2, '0');
+                                setInterval(() => {
+                                    const hours = Math.floor(seconds / 3600).toString().padStart(2, '0');
+                                    const minutes = Math.floor((seconds % 3600) / 60).toString().padStart(2, '0');
+                                    const remainingSeconds = (seconds % 60).toString().padStart(2, '0');
+                                    clockElement.textContent = `${hours}:${minutes}:${remainingSeconds}`;
+                                    seconds++;
+                                }, 1000);
+                            }
 
-            return `${hours}:${minutes}:${seconds}`;
-        }
+                            function calculateDelay(loginTime) {
+                                const expectedTime = '08:30:00';
+                                const loginTimestamp = new Date(`2000-01-01 ${loginTime}`);
+                                const expectedTimestamp = new Date(`2000-01-01 ${expectedTime}`);
+                                const delayTimestamp = new Date(loginTimestamp - expectedTimestamp);
 
-        function updateDelayClock(elementId, loginTime) {
-            const clockElement = document.getElementById(elementId);
-            setInterval(() => {
-                const delay = calculateDelay(loginTime);
-                clockElement.textContent = delay !== 'NaN:NaN:NaN' ? delay : '00:00:00';
-            }, 1000);
-        }
-        function updatePauseClock(elementId, pauseStartTime) {
-        const clockElement = document.getElementById(elementId);
-        const pauseDuration = 60 * 60 * 1000; // 1 heure en millisecondes
-        const pauseEndTime = new Date(pauseStartTime).getTime() + pauseDuration;
+                                const hours = delayTimestamp.getUTCHours().toString().padStart(2, '0');
+                                const minutes = delayTimestamp.getUTCMinutes().toString().padStart(2, '0');
+                                const seconds = delayTimestamp.getUTCSeconds().toString().padStart(2, '0');
 
-    setInterval(() => {
-        const now = new Date().getTime();
-        let remainingMilliseconds = pauseEndTime - now;
+                                return `${hours}:${minutes}:${seconds}`;
+                            }
 
-        if (remainingMilliseconds >= 0) {
-            const hours = Math.floor(remainingMilliseconds / 3600000).toString().padStart(2, '0');
-            const minutes = Math.floor((remainingMilliseconds % 3600000) / 60000).toString().padStart(2, '0');
-            const seconds = Math.floor((remainingMilliseconds % 60000) / 1000).toString().padStart(2, '0');
+                            function updateDelayClock(elementId, loginTime) {
+                                const clockElement = document.getElementById(elementId);
+                                setInterval(() => {
+                                    const delay = calculateDelay(loginTime);
+                                    clockElement.textContent = delay !== 'NaN:NaN:NaN' ? delay : '00:00:00';
+                                }, 1000);
+                            }
 
-            clockElement.textContent = `${hours}:${minutes}:${seconds}`;
-        } else {
-            clockElement.textContent = '00:00:00'; // Pause terminée
-        }
-    }, 1000);
-}
+                            function updatePauseClock(elementId, pauseStartTime) {
+                                const clockElement = document.getElementById(elementId);
+                                const pauseDuration = 60 * 60 * 1000; // 1 hour in milliseconds
+                                const pauseEndTime = new Date(pauseStartTime).getTime() + pauseDuration;
 
+                                setInterval(() => {
+                                    const now = new Date().getTime();
+                                    let remainingMilliseconds = pauseEndTime - now;
 
-                        function updateClock(elementId, time) {
-                            const clockElement = document.getElementById(elementId);
-                            setInterval(() => {
-                                const now = new Date();
-                                const hours = now.getHours().toString().padStart(2, '0');
-                                const minutes = now.getMinutes().toString().padStart(2, '0');
-                                const seconds = now.getSeconds().toString().padStart(2, '0');
-                                clockElement.textContent = `${hours}:${minutes}:${seconds}`;
-                            }, 1000);
-                        }
-                    </script>
+                                    if (remainingMilliseconds >= 0) {
+                                        const hours = Math.floor(remainingMilliseconds / 3600000).toString().padStart(2, '0');
+                                        const minutes = Math.floor((remainingMilliseconds % 3600000) / 60000).toString().padStart(2, '0');
+                                        const seconds = Math.floor((remainingMilliseconds % 60000) / 1000).toString().padStart(2, '0');
+
+                                        clockElement.textContent = `${hours}:${minutes}:${seconds}`;
+                                    } else {
+                                        clockElement.textContent = '00:00:00';
+                                    }
+                                }, 1000);
+                            }
+                        </script>
+                    @endforeach
                 </div>
             </div>
         </div>

@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\DB;
 use App\Models\ParJour;
 use App\Models\User;
+use App\Models\Time;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -12,13 +14,20 @@ class ParJourController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
-{
-    $dt = Carbon::now()->format('Y-m-d'); // Format the date to 'YYYY-MM-DD'
-    $users = User::all(); // Assuming you are retrieving users from the database
+    public function index(Request $request)
+    {
+        $dt = $request->input('dt', Carbon::now()->format('Y-m-d'));
 
-    return view('ParJour.ParJour', ['dt' => $dt, 'users' => $users]);
-}
+        // Validate the date format if needed
+        $request->validate([
+            'dt' => 'date_format:Y-m-d',
+        ]);
+
+        // Fetch records based on the date using Eloquent ORM
+        $parjours = Time::whereDate('record_date', $dt)->get();
+
+        return view('ParJour.ParJour', compact('dt', 'parjours'));
+    }
 
 
 
