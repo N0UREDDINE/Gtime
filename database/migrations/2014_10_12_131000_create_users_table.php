@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('password');
             $table->string('salaire')->nullable();
             $table->string('prime')->nullable();
+            $table->string('statut')->nullable();
             $table->unsignedBigInteger('role_id')->nullable();
             $table->foreign('role_id')->references('id')->on('roles')->onDelete('cascade');
             $table->timestamp('email_verified_at')->nullable();

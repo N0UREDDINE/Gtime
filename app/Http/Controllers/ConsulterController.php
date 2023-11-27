@@ -16,18 +16,16 @@ class ConsulterController extends Controller
     {
         $search = $request->input('search');
 
-        // If there is a search query, filter the results
-        $consulters = $search
-            ? Consulter::with('user')
-                ->whereHas('user', function ($query) use ($search) {
-                    $query->where('name', 'like', '%' . $search . '%');
-                })
-                ->get()
-            : Consulter::with('user')->get();
+        $consulters = Consulter::with('user')->get();
 
         $users = User::all();
 
-        return view('consulter.consulter', ['Consulters' => $consulters, 'Users' => $users]);
+        // Retrieve time records based on the user search
+        $times = Time::whereHas('user', function ($query) use ($search) {
+            $query->where('name', 'like', '%' . $search . '%');
+        })->get();
+
+        return view('consulter.consulter', ['Consulters' => $consulters, 'Users' => $users, 'Times' => $times]);
     }
     /**
      * Show the form for creating a new resource.

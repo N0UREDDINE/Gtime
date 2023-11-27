@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Time;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 
 class TimeController extends Controller
 {
@@ -13,62 +14,39 @@ class TimeController extends Controller
     public function index()
     {
         $times = Time::all();
-        return view('time.time', ['times' => $times]);
+        $user = auth()->user();
+        $loginDate = $user->created_at;
+        $serviceHours = $this->calculateServiceHours($loginDate);
+        $lateArrival = $this->calculateLateArrival($loginDate);
+
+        return view('time.time', compact('times', 'user', 'loginDate', 'serviceHours', 'lateArrival'));
     }
 
     /**
-     * Show the form for creating a new resource.
+     * ... (Other CRUD methods remain unchanged) ...
+
+    /**
+     * Additional method for calculating service hours.
      */
-    public function create()
+    private function calculateServiceHours($loginDate)
     {
-        //
+        $loginTime = Carbon::parse($loginDate);
+        $workStartTime = Carbon::parse('08:30:00');
+
+        return $loginTime->diffAsCarbonInterval($workStartTime)->format('%H:%I:%S');
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Additional method for calculating late arrival.
      */
-    public function store(Request $request)
+    private function calculateLateArrival($loginDate)
     {
-        // Validez les données du formulaire, puis créez une nouvelle entrée
-        $request->validate([
-            'Login_time' => 'required|date',
-            // ... Autres règles de validation ...
-        ]);
+        $loginTime = Carbon::parse($loginDate);
+        $workStartTime = Carbon::parse('08:30:00');
 
-        $time = new Time();
-        $time->Login_time = $request->input('Login_time');
-        // Assignez d'autres champs en fonction de votre logique
-        $time->save();
-        return redirect()->route('time.index')->with('success', 'Time entry created successfully!');
+        return $loginTime->diffInMinutes($workStartTime) > 0 ? $loginTime->diff($workStartTime)->format('%H:%I:%S') : '00:00:00';
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Time $time)
-    {
-        // Validez les données du formulaire, puis mettez à jour l'entrée existante
-        $request->validate([
-            'Login_time' => 'required|date',
-            // ... Autres règles de validation ...
-        ]);
+    
 
-        $time->Login_time = $request->input('Login_time');
-        // Mettez à jour d'autres champs en fonction de votre logique
-
-        $time->save();
-
-        return redirect()->route('time.index')->with('success', 'Time entry updated successfully!');
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Time $time)
-    {
-        // Supprimez l'entrée de la base de données
-        $time->delete();
-
-        return redirect()->route('time.index')->with('success', 'Time entry deleted successfully!');
-    }
 }

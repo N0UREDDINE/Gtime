@@ -20,8 +20,14 @@
                 <form method="get" action="{{ route('consulter') }}" enctype="multipart/form-data">
                     @csrf
                     <div class="flex items-center">
-                        <input type="text" name="search" placeholder="Search by name" class="mr-2 p-2 border rounded">
+                        <input type="text" name="search" placeholder="Search by name" class="mr-2 p-2 border rounded"
+                            value="{{ request('search') }}">
                         <button type="submit" class="bg-blue-500 text-white p-2 rounded">Search</button>
+                        @if (request('search'))
+                            <h2 class="font-semibold text-2xl text-gray-800 leading-tight ml-4">
+                                Results for: {{ request('search') }}
+                            </h2>
+                        @endif
                     </div>
                 </form>
             </div>
@@ -40,20 +46,27 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($Consulters as $Consulter)
+                        @forelse ($Times as $time)
                             <tr>
-                                <td class="px-2 py-4 border">{{ $Consulter->name }}</td>
-                                <td class="px-1 py-4 border">{{ $Consulter->work_time }}</td>
-                                <td class="px-1 py-4 border">{{ $Consulter->email }}</td>
-                                <td class="px-1 py-4 border">{{ $Consulter->password }}</td>
-                                <td class="px-1 py-4 border">{{ $Consulter->name }}</td>
-                                <td class="px-1 py-4 border">{{ $Consulter->name }}</td>
-                                <td class="px-1 py-4 border">{{ $Consulter->name }}</td>
+                                <td class="px-2 py-4 border">{{ $time->record_date }}</td>
+                                <td class="px-1 py-4 border">{{ $time->login_time }}</td>
+                                <td class="px-1 py-4 border">{{ $time->delay_time }}</td>
+                                <td class="px-1 py-4 border">{{ $time->service_time }}</td>
+                                <td class="px-1 py-4 border">{{ $time->break_end_time }}</td>
+                                <td class="px-1 py-4 border">{{ $time->logout_time }}</td>
+                                <td class="px-1 py-4 border">{{ $time->prime }}</td>
                             </tr>
-                        @endforeach
+                        @empty
+                            <tr>
+                                <td colspan="7" class="px-6 py-4 border">
+                                    <center class="text-2xl font-bold">No data available for this user.</center>
+                                </td>
+                            </tr>
+                        @endforelse
                     </tbody>
                 </table>
             </div>
+            
         </div>
     </div>
 
