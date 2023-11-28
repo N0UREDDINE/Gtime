@@ -13,4 +13,9 @@ class Consulter extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function time()
+    {
+        return $this->belongsTo(Time::class, 'time_id');
+    }
 }

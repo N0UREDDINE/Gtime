@@ -22,6 +22,11 @@ class Time extends Model
     {
         return $this->belongsTo(User::class, 'user_id');
     }
+
+     public function parjour()
+    {
+        return $this->belongsTo(ParJour::class, 'parjour_id'); // Adjust the foreign key as needed
+    }
 }
     // Add these accessor methods to calculate derived attributes
 //     public function getLogInTimeAttribute()

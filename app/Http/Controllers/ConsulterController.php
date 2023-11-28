@@ -13,20 +13,31 @@ class ConsulterController extends Controller
      * Display a listing of the resource.
      */
     public function index(Request $request)
-    {
-        $search = $request->input('search');
+{
+    $search = $request->input('search');
+    $month = $request->input('month');
+    $year = $request->input('year');
 
-        $consulters = Consulter::with('user')->get();
+    $consulters = Consulter::with('user')->get();
+    $users = User::all();
 
-        $users = User::all();
+    // Retrieve time records based on the user search, selected month, and selected year
+    $times = Time::whereHas('user', function ($query) use ($search) {
+        $query->where('name', 'like', '%' . $search . '%');
+    });
 
-        // Retrieve time records based on the user search
-        $times = Time::whereHas('user', function ($query) use ($search) {
-            $query->where('name', 'like', '%' . $search . '%');
-        })->get();
-
-        return view('consulter.consulter', ['Consulters' => $consulters, 'Users' => $users, 'Times' => $times]);
+    if ($month) {
+        $times->whereMonth('record_date', $month);
     }
+
+    if ($year) {
+        $times->whereYear('record_date', $year);
+    }
+
+    $times = $times->get();
+
+    return view('consulter.consulter', ['Consulters' => $consulters, 'Users' => $users, 'Times' => $times]);
+}
     /**
      * Show the form for creating a new resource.
      */

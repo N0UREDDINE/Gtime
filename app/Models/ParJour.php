@@ -8,10 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class ParJour extends Model
 {
     use HasFactory;
-    protected $fillable = [
-        'user_id',
-        'time_id',
-    ];
+
+    //protected $fillable = ['user_id', 'time_id','record_date'];
 
     public function user()
     {

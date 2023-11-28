@@ -29,10 +29,10 @@
                     <thead class="text-xs text-gray-900 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                         <tr>
                             <th scope="col" class="px-6 py-3 border">ID</th>
-                            <th scope="col" class="px-6 py-3 border">Name</th>
+                            <th scope="col" class="px-6 py-3 border">NOM</th>
                             <th scope="col" class="px-6 py-3 border">Email</th>
-                            <th scope="col" class="px-6 py-3 border">Phone</th>
-                            <th scope="col" class="px-6 py-3 border">Role</th>
+                            <th scope="col" class="px-6 py-3 border">Téléphone</th>
+                            <th scope="col" class="px-6 py-3 border">Rôle</th>
                             <th scope="col" class="px-6 py-3 border">Action</th>
                         </tr>
                     </thead>
@@ -46,10 +46,10 @@
                                 <td class="px-6 py-4 border">{{ $user->role }}</td>
                                 <td class="px-6 py-4 border">
                                     <form action="{{ route('destroyUser', $user) }}" method="POST">
-                                        <a href="/user/{{ $user->id }}/edit" style="color: green; font-weight: bold">Edit</a> &nbsp; | &nbsp;
+                                        <a href="/user/{{ $user->id }}/edit" style="color: green; font-weight: bold">Modifier</a> &nbsp; | &nbsp;
                                         @csrf
                                         @method('DELETE')
-                                        <button type="submit" style="color: red; font-weight: bold;">Delete</button>
+                                        <button type="submit" style="color: red; font-weight: bold;">Supprimer</button>
                                     </form>
                                 </td>
                             </tr>
