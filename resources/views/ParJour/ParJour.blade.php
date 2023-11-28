@@ -32,35 +32,35 @@
             </div>
 
             <div class="relative overflow-x-auto shadow-md sm:rounded-lg mt-5">
-                <table class="w-full text-sm text-center text-gray-500 border border-gray-300 border-collapse">
-                    <thead class="text-xs text-gray-900 uppercase bg-white dark:bg-gray-700 dark:text-gray-400">
-                        <tr>
-                            <th scope="col" class="px-6 py-3 border">Nom Employé</th>
-                            <th scope="col" class="px-6 py-3 border">TEMPS de LOGIN</th>
-                            <th scope="col" class="px-6 py-3 border">TEMPS de RETARD</th>
-                            <th scope="col" class="px-6 py-3 border">TEMPS de SERVICE</th>
-                            <th scope="col" class="px-6 py-3 border">TEMPS de PAUSE</th>
-                            <th scope="col" class="px-6 py-3 border">STATUS</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @forelse ($parjours as $parjour)
-                            <tr>
-                                <td class="px-2 py-4 border">{{ ($parjour->user)->name }}</td>
-                                <td class="px-1 py-4 border">{{ optional($parjour->time)->login_time }}</td>
-                                <td class="px-1 py-4 border">{{ optional($parjour->time)->delay_time }}</td>
-                                <td class="px-1 py-4 border">{{ optional($parjour->time)->full_time }}</td>
-                                <td class="px-1 py-4 border">{{ optional($parjour->time)->break_time }}</td>
-                                <td class="px-1 py-4 border">{{ optional($parjour->user)->status }}</td>
-                            </tr>
-                        @empty
-                            <tr>
-                                <td colspan="6" class="text-center">No records found for the selected date.</td>
-                            </tr>
-                        @endforelse
-                    </tbody>
-                </table>
-            </div>
+        <table class="w-full text-sm text-center text-gray-500 border border-gray-300 border-collapse">
+            <thead class="text-xs text-gray-900 uppercase bg-white dark:bg-gray-700 dark:text-gray-400">
+                <tr>
+                    <th scope="col" class="px-6 py-3 border">Nom Employé</th>
+                    <th scope="col" class="px-6 py-3 border">TEMPS de LOGIN</th>
+                    <th scope="col" class="px-6 py-3 border">TEMPS de RETARD</th>
+                    <th scope="col" class="px-6 py-3 border">TEMPS de SERVICE</th>
+                    <th scope="col" class="px-6 py-3 border">TEMPS de PAUSE</th>
+                    <th scope="col" class="px-6 py-3 border">STATUS</th>
+                </tr>
+            </thead>
+            <tbody>
+                @forelse ($parjours as $parjour)
+                    <tr>
+                        <td class="px-2 py-4 border">{{ ($parjour->user)->name }}</td>
+                        <td class="px-1 py-4 border">{{ optional($parjour)->login_time }}</td>
+                        <td class="px-1 py-4 border">{{ optional($parjour)->delay_time }}</td>
+                        <td class="px-1 py-4 border">{{ optional($parjour)->service_time }}</td>
+                        <td class="px-1 py-4 border">{{ optional($parjour)->break_time }}</td>
+                        <td class="px-1 py-4 border">{{ optional($parjour->user)->status }}</td>
+                    </tr>
+                @empty
+                    <tr>
+                        <td colspan="6" class="text-center">No records found for the selected date.</td>
+                    </tr>
+                @endforelse
+            </tbody>
+        </table>
+    </div>
         </div>
     </div>
 

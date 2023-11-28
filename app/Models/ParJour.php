@@ -9,7 +9,7 @@ class ParJour extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['user_id', 'time_id','record_date'];
+    //protected $fillable = ['user_id', 'time_id','record_date'];
 
     public function user()
     {
