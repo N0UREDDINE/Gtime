@@ -1,3 +1,44 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+* {
+  background-color: rgb(6, 212, 240), 177, 209);
+}
+
+
+.styled-card {
+    width: 300px;
+    height: 450px;
+    border: 1px solid #ddd;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s;
+  }
+  
+  .styled-card:hover {
+    transform: scale(1.05);
+  }
+  
+  .styled-card img {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .card-content {
+    padding: 16px;
+  }
+  
+  h3 {
+    margin: 0;
+    color: #333;
+  }
+  
+  p {
+    margin: 8px 0;
+    color: #666;
+  }
