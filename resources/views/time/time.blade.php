@@ -1,8 +1,6 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-2xl text-gray-800 leading-tight text-center">
-            Welcome, {{ Auth::user()->name }}!
-        </h2>
+        
     </x-slot>
 
     <div class="py-12">
@@ -28,9 +26,9 @@
             </div>
 
             <x-slot name="header">
-                <h2 class="font-semibold text-2xl text-gray-800 leading-tight">
-                    Tableau de Temps avec Horloges
-                </h2>
+            <h2 class="font-semibold text-2xl text-gray-800 leading-tight text-center">
+                Welcome, {{ Auth::user()->name }}!
+            </h2>
             </x-slot>
 
             <div class="py-12">

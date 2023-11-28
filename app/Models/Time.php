@@ -22,6 +22,8 @@ class Time extends Model
     {
         return $this->belongsTo(User::class, 'user_id');
     }
+
+    
 }
     // Add these accessor methods to calculate derived attributes
 //     public function getLogInTimeAttribute()

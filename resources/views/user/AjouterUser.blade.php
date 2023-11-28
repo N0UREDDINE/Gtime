@@ -14,7 +14,7 @@
 
                         @csrf
                         <div class="mb-6">
-                            <label for="FN" class="block mb-2 text-sm font-medium text-gray-900">Name</label>
+                            <label for="FN" class="block mb-2 text-sm font-medium text-gray-900">NOM</label>
                             <input type="text" id="Name" name="Name" class="bg-gray-50 border border-gray-300 text-black-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 light:bg-gray-700 light:border-gray-600 dark:placeholder-gray-400 light:text-white light:focus:ring-blue-500 light:focus:border-blue-500" placeholder="Name ..." required autofocus>
                         </div>
 
@@ -24,7 +24,7 @@
                         </div>
 
                         <div class="mb-6">
-                            <label for="Phone" class="block mb-2 text-sm font-medium text-gray-900">Phone</label>
+                            <label for="Phone" class="block mb-2 text-sm font-medium text-gray-900">Téléphone</label>
                             <input type="text" id="Phone" name="Phone" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 light:bg-gray-700 light:border-gray-600 light:placeholder-gray-400 light:text-white light:focus:ring-blue-500 light:focus:border-blue-500" placeholder="Phone ..." required>
                         </div>
 
@@ -40,7 +40,7 @@
                         </div>
 
                         <div class="mb-6">
-                            <label for="Address" class="block mb-2 text-sm font-medium text-gray-900">Password</label>
+                            <label for="Address" class="block mb-2 text-sm font-medium text-gray-900">Mot de passe</label>
                             <input type="text" id="Password" name="Password" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 light:bg-gray-700 light:border-gray-600 light:placeholder-gray-400 light:text-white light:focus:ring-blue-500 light:focus:border-blue-500" placeholder="Password ..." required>
                         </div>
 

@@ -17,6 +17,7 @@ return new class extends Migration
         $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         $table->unsignedBigInteger('time_id'); // Add a foreign key to associate with times
         $table->foreign('time_id')->references('id')->on('times')->onDelete('cascade');
+        $table->date('record_date');
         $table->timestamps();
     });
 }

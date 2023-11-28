@@ -14,7 +14,22 @@ class ParJourController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request)
+    public function index1(Request $request)
+{
+    $dt = $request->input('dt', Carbon::now()->format('Y-m-d'));
+    $request->validate([
+        'dt' => 'date_format:Y-m-d',
+    ]);
+
+    // Fetch records based on the date using Eloquent ORM
+    $parjours = ParJour::with(['user', 'time'])
+        ->whereDate('record_date', $dt)
+        ->get();
+
+    return view('ParJour.ParJour', compact('dt', 'parjours'));
+}
+
+public function index(Request $request)
     {
         $dt = $request->input('dt', Carbon::now()->format('Y-m-d'));
 
@@ -28,7 +43,6 @@ class ParJourController extends Controller
 
         return view('ParJour.ParJour', compact('dt', 'parjours'));
     }
-
 
 
     /**
