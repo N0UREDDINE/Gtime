@@ -96,9 +96,9 @@ function calculatePrime($lateArrival) {
         </div>
     </div>
     <script>
-   document.addEventListener('DOMContentLoaded', function () {
-    let pauseTimerValue = localStorage.getItem('pauseTimerValue') || 0;
-    let serviceTimerValue = localStorage.getItem('serviceTimerValue') || 0;
+document.addEventListener('DOMContentLoaded', function () {
+    let pauseTimerValue = parseInt(localStorage.getItem('pauseTimerValue')) || 0;
+    let serviceTimerValue = parseInt(localStorage.getItem('serviceTimerValue')) || 0;
     let isPaused = localStorage.getItem('isPaused') === 'true';
     let pauseTimerInterval;
     let serviceTimerInterval;
@@ -122,7 +122,11 @@ function calculatePrime($lateArrival) {
         updateTimer('ServiceTimer', serviceTimerValue);
     }
 
-    serviceTimerInterval = setInterval(updateServiceTimer, 1000);
+    if (!isPaused) {
+        serviceTimerInterval = setInterval(updateServiceTimer, 1000);
+    } else {
+        pauseTimerInterval = setInterval(updatePauseTimer, 1000);
+    }
 
     document.getElementById('pauseButton').addEventListener('click', function () {
         isPaused = !isPaused;
@@ -136,11 +140,18 @@ function calculatePrime($lateArrival) {
             serviceTimerInterval = setInterval(updateServiceTimer, 1000);
             alert('Service timer resumed!');
         }
+
+        localStorage.setItem('isPaused', isPaused);
+    });
+
+    window.addEventListener('beforeunload', function () {
+        localStorage.setItem('pauseTimerValue', pauseTimerValue);
+        localStorage.setItem('serviceTimerValue', serviceTimerValue);
+        localStorage.setItem('isPaused', isPaused);
     });
 });
-
-
 </script>
+
 
     
 </x-app-layout>

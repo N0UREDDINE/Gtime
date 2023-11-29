@@ -74,11 +74,12 @@ Route::middleware(['auth', 'role:employe'])->group(function () {
     //Route::get('/time', function () {return view('time');})->middleware(['auth', 'verified'])->name('time');
 
 });
-// Route::middleware(['auth', 'role:admin|employe'])->group(function () {
-//     Route::get('/time', [TimeController::class, 'index'])->name('time');
-// });
 
 
+
+// Route::get('/time/fetch-timer', [TimeController::class, 'fetchTimer'])->middleware('auth');
+// Route::post('/time/update-timer', [TimeController::class, 'updateTimer'])->middleware('auth');
+// Route::post('/time/save-timer', [TimeController::class, 'saveTimer'])->middleware('auth');
 
 
 require __DIR__ . '/auth.php';
