@@ -70,9 +70,9 @@ function calculatePrime($lateArrival) {
                             <tbody>
                                 <tr>
                                     <td class="px-6 py-4 border">{{ $loginDate }}</td>
-                                    <td class="px-6 py-4 border"><span id="pauseTimer">00:00:00</span></td>
+                                    <td class="px-6 py-4 border"><span id="ServiceTimer">00:00:00</span></td>
                                     <td class="px-6 py-4 border">{{ calculateLateArrival($loginDate)['hours'] }} : {{ calculateLateArrival($loginDate)['minutes'] }} : {{ calculateLateArrival($loginDate)['seconds'] }}  </td>
-                                    <td class="px-6 py-4 border"><span id="ServiceTimer">01:00:00</span></td>
+                                    <td class="px-6 py-4 border"><span id="pauseTimer">00:00:00</span></td>
                                     <td class="px-6 py-4 border">{{ calculatePrime($lateArrival) }}</td>
                                 </tr>
                             </tbody>
@@ -96,38 +96,51 @@ function calculatePrime($lateArrival) {
         </div>
     </div>
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            let pauseTimerValue = 0;
-            let serviceTimerValue = 3600;
+   document.addEventListener('DOMContentLoaded', function () {
+    let pauseTimerValue = localStorage.getItem('pauseTimerValue') || 0;
+    let serviceTimerValue = localStorage.getItem('serviceTimerValue') || 0;
+    let isPaused = localStorage.getItem('isPaused') === 'true';
+    let pauseTimerInterval;
+    let serviceTimerInterval;
 
-            function updateTimer(timerId, timerValue) {
-                const hours = Math.floor(timerValue / 3600);
-                const minutes = Math.floor((timerValue % 3600) / 60);
-                const seconds = timerValue % 60;
-                const formattedTime = `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
-                document.getElementById(timerId).textContent = formattedTime;
-            }
+    function updateTimer(timerId, timerValue) {
+        const hours = Math.floor(timerValue / 3600);
+        const minutes = Math.floor((timerValue % 3600) / 60);
+        const seconds = timerValue % 60;
 
-            function updatePauseTimer() {
-                pauseTimerValue++;
-                updateTimer('pauseTimer', pauseTimerValue);
-            }
+        const formattedTime = `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+        document.getElementById(timerId).textContent = formattedTime;
+    }
 
-            function updateServiceTimer() {
-                serviceTimerValue--;
-                updateTimer('ServiceTimer', serviceTimerValue);
-            }
+    function updatePauseTimer() {
+        pauseTimerValue++;
+        updateTimer('pauseTimer', pauseTimerValue);
+    }
 
-            const pauseTimerInterval = setInterval(updatePauseTimer, 1000);
-            const serviceTimerInterval = setInterval(updateServiceTimer, 1000);
+    function updateServiceTimer() {
+        serviceTimerValue++;
+        updateTimer('ServiceTimer', serviceTimerValue);
+    }
 
-            document.getElementById('pauseButton').addEventListener('click', function () {
-                clearInterval(pauseTimerInterval);
-                clearInterval(serviceTimerInterval);
-                alert('Pause timer stopped!');
-            });
-        });
-    </script>
+    serviceTimerInterval = setInterval(updateServiceTimer, 1000);
+
+    document.getElementById('pauseButton').addEventListener('click', function () {
+        isPaused = !isPaused;
+
+        if (isPaused) {
+            clearInterval(serviceTimerInterval);
+            pauseTimerInterval = setInterval(updatePauseTimer, 1000);
+            alert('Service timer paused!');
+        } else {
+            clearInterval(pauseTimerInterval);
+            serviceTimerInterval = setInterval(updateServiceTimer, 1000);
+            alert('Service timer resumed!');
+        }
+    });
+});
+
+
+</script>
 
     
 </x-app-layout>
